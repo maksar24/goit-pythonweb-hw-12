@@ -1,5 +1,5 @@
 [project]
-name = "goit-pythonweb-hw-10"
+name = "goit-pythonweb-hw-12"
 version = "0.1.0"
 description = ""
 authors = [
@@ -20,12 +20,26 @@ dependencies = [
     "fastapi-mail (>=1.5.0,<2.0.0)",
     "slowapi (>=0.1.9,<0.2.0)",
     "cloudinary (>=1.44.1,<2.0.0)",
-    "bcrypt (<4.1.0)"
+    "bcrypt (<4.1.0)",
+    "redis[asyncio] (>=6.2.0,<7.0.0)",
+    "pytest (>=8.4.1,<9.0.0)",
+    "pytest-cov (>=6.2.1,<7.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "asgi-lifespan (>=2.1.0,<3.0.0)"
 ]
 
 [tool.poetry]
 packages = [{include = "src"}]
 
+
+[tool.poetry.group.dev.dependencies]
+sphinx = "^8.2.3"
+pytest-asyncio = "^1.0.0"
+
+[tool.pytest.ini_options]
+markers = [
+    "asyncio: mark async tests"
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -6,8 +6,15 @@ from src.database.db import get_db
 
 router = APIRouter(tags=["health"])
 
+
 @router.get("/healthchecker")
 async def healthchecker(db: AsyncSession = Depends(get_db)):
+    """
+    Health check endpoint to verify database connectivity.
+
+    Returns a success message if the database connection is working correctly.
+    Raises HTTP 500 error if the database is not configured or connection fails.
+    """
     try:
         result = await db.execute(text("SELECT 1"))
         result = result.scalar_one_or_none()

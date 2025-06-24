@@ -1,6 +1,18 @@
+"""
+This module contains Pydantic schemas for the application.
+
+Schemas are used for request and response validation and serialization.
+"""
+
+import enum
 from pydantic import BaseModel, EmailStr, Field
 from datetime import date
 from typing import Optional
+
+
+class UserRole(str, enum.Enum):
+    user = "user"
+    admin = "admin"
 
 
 class User(BaseModel):
@@ -8,6 +20,7 @@ class User(BaseModel):
     username: str
     email: EmailStr
     avatar: str
+    role: UserRole
 
     model_config = {"from_attributes": True}
 
@@ -16,11 +29,17 @@ class UserCreate(BaseModel):
     username: str
     email: str
     password: str
+    role: Optional[str] = "user"
 
 
 class Token(BaseModel):
     access_token: str
+    refresh_token: str
     token_type: str
+
+
+class TokenRefreshRequest(BaseModel):
+    refresh_token: str
 
 
 class ContactBase(BaseModel):
@@ -53,3 +72,12 @@ class ContactResponse(ContactBase):
 
 class RequestEmail(BaseModel):
     email: EmailStr
+
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
